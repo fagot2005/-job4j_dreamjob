@@ -1,27 +1,43 @@
 package model;
 
-public class Candidate {
-    private String name;
-    private String rezume;
+import java.util.Objects;
 
-    public Candidate(String name, String rezume) {
+public class Candidate {
+    private int id;
+    private String name;
+
+    public Candidate(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.rezume = rezume;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setId(int name) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getRezume() {
-        return rezume;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Candidate candidate = (Candidate) o;
+        return id == candidate.id &&
+                Objects.equals(name, candidate.name);
     }
 
-    public void setRezume(String rezume) {
-        this.rezume = rezume;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }
