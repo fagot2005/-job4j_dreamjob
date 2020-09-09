@@ -23,7 +23,7 @@ public class Store {
         candidate.put(2, new Candidate(2, "Petrov Petro"));
         candidate.put(3, new Candidate(3, "Sidorov Sidor"));
 
-            }
+    }
 
     public static Store instOf() {
         return INST;
@@ -38,12 +38,24 @@ public class Store {
     }
 
     public void save(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
         posts.put(post.getId(), post);
     }
 
+    public Post findByPostId(int id) {
+        return posts.get(id);
+    }
+
     public void saveCandidate(Candidate candidat) {
-        candidat.setId(CANDIDATE_ID.incrementAndGet());
+        if (candidat.getId() == 0) {
+            candidat.setId(CANDIDATE_ID.incrementAndGet());
+        }
         candidate.put(candidat.getId(), candidat);
+    }
+
+    public Candidate findByCandidateId(int id) {
+        return candidate.get(id);
     }
 }
