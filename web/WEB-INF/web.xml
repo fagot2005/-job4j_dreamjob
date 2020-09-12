@@ -15,7 +15,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CandidateServlet</servlet-name>
-        <servlet-class>servlet.PostServlet</servlet-class>
+        <servlet-class>servlet.CandidateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CandidateServlet</servlet-name>

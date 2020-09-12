@@ -38,7 +38,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Candidate candidate : (Collection<Candidate>) request.getAttribute("candidates")) { %>
+                    <% for (Candidate candidate : (Collection<Candidate>) request.getAttribute("candidate")) { %>
                     <tr>
                         <td>
                             <a href="<%=request.getContextPath()%>/candidate/edit.jsp?id=<%=candidate.getId()%>">
