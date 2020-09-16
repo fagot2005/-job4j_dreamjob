@@ -18,7 +18,7 @@ public class PsqlStore implements Store{
 
     private final BasicDataSource pool = new BasicDataSource();
 
-    private PsqlStore() throws FileNotFoundException {
+    private PsqlStore()  {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(new FileReader("db.properties"))
         ) {
@@ -66,7 +66,7 @@ public class PsqlStore implements Store{
     }
 
     @Override
-    public Collection<Candidate> findAllCandidate() {
+    public Collection<Candidate> findAllCandidates() {
         return null;
     }
 

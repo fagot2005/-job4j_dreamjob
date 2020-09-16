@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface Store {
     Collection<Post> findAllPosts();
-    Collection<Candidate> findAllCandidate();
+    Collection<Candidate> findAllCandidates();
     void save(Post post);
     Post findById(int id);
 
