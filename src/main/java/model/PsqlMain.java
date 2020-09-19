@@ -10,5 +10,9 @@ public class PsqlMain {
         ) {
             System.out.println(ps.getId() + ps.getName() + ps.getDescription() + ps.getCreated());
         }
+        System.out.println(store.findById(1).getName());
+
+        store.save(new Post(1, "Java Job update", "Easy task update", LocalDateTime.now()));
+        System.out.println(store.findById(1).getName());
     }
 }

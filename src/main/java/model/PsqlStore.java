@@ -1,13 +1,7 @@
 package model;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import model.Candidate;
-import model.Post;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +14,8 @@ public class PsqlStore implements Store{
 
     private PsqlStore()  {
         Properties cfg = new Properties();
-        try (BufferedReader io = new BufferedReader(new FileReader("db.properties"))
-        ) {
-            cfg.load(io);
+        try (final InputStream resurseAsStream = PsqlStore.class.getClassLoader().getResourceAsStream("db.properties")) {
+            cfg.load(resurseAsStream);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -77,7 +70,6 @@ public class PsqlStore implements Store{
         } else {
             update(post);
         }
-
     }
 
     @Override
@@ -122,7 +114,23 @@ public class PsqlStore implements Store{
         return post;
     }
 
-    private void update(Post post) {
-
+    private Post update(Post post) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement pr = cn.prepareStatement("UPDATE post SET name = ?, description = ?, created = ? WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            pr.setString(1, post.getName());
+            pr.setString(2, post.getDescription());
+            pr.setTimestamp(3, Timestamp.valueOf((post.getCreated())));
+            pr.setInt(4, post.getId());
+            pr.executeUpdate();
+//            try (ResultSet id = pr.getGeneratedKeys()) {
+//                if (id.next()) {
+//                    post.setId(id.getInt(1));
+//                }
+//            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return post;
     }
 }
