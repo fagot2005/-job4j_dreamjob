@@ -14,7 +14,8 @@ public class PsqlStore implements Store{
 
     private PsqlStore()  {
         Properties cfg = new Properties();
-        try (final InputStream resurseAsStream = PsqlStore.class.getClassLoader().getResourceAsStream("db.properties")) {
+        try (final InputStream resurseAsStream = PsqlStore.class.getClassLoader().
+                getResourceAsStream("db.properties")) {
             cfg.load(resurseAsStream);
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -49,7 +50,10 @@ public class PsqlStore implements Store{
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name"), it.getString("description"), it.getTimestamp("created").toLocalDateTime()));
+                    posts.add(new Post(it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getTimestamp("created").toLocalDateTime()));
                 }
             }
         } catch (Exception e) {
@@ -97,7 +101,9 @@ public class PsqlStore implements Store{
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement pr = cn.prepareStatement("INSERT INTO post (name, description, created) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement pr = cn.prepareStatement("INSERT INTO post (name, description, created) " +
+                     "VALUES (?, ?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             pr.setString(1, post.getName());
             pr.setString(2, post.getDescription());
@@ -116,7 +122,8 @@ public class PsqlStore implements Store{
 
     private Post update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement pr = cn.prepareStatement("UPDATE post SET name = ?, description = ?, created = ? WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement pr = cn.prepareStatement("UPDATE post SET name = ?, description = ?, created = ? " +
+                     "WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             pr.setString(1, post.getName());
             pr.setString(2, post.getDescription());
