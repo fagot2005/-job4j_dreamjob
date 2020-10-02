@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.MemStore" %>
+<%@ page import="model.PsqlStore" %>
 <%@ page import="model.Candidate" %>
 <%@ page import="java.util.Collection" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

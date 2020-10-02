@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.MemStore" %>
+<%@ page import="model.PsqlStore" %>
 <%@ page import="model.Post" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
@@ -25,9 +26,9 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Post post = new Post(0, "", "", LocalDate.now());
+    Post post = new Post(0, "", "", LocalDateTime.now());
     if (id != null) {
-        post = MemStore.instOf().findByPostId(Integer.valueOf(id));
+        post = PsqlStore.instOf().findById(Integer.valueOf(id));
     }
 %>
 <div class="container pt-3">

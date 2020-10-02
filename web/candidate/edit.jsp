@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.MemStore" %>
+<%@ page import="model.PsqlStore" %>
 <%@ page import="model.Candidate" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
@@ -26,7 +26,7 @@
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0, "");
     if (id != null) {
-        candidate = MemStore.instOf().findByCandidateId(Integer.valueOf(id));
+        candidate = PsqlStore.instOf().findById(Integer.valueOf(id));
     }
 %>
 <div class="container pt-3">
